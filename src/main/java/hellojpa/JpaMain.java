@@ -13,18 +13,17 @@ public class JpaMain {
         tx.begin();
 
         try{
-            Team team = new Team();
-            team.setName("TeamA");
-            em.persist(team); //영속 상태가 되면 무조건 id값이 설정되어 있음
 
             Member member = new Member();
             member.setUsername("member1");
-            member.changeTeam(team);
+
             em.persist(member);
 
+            Team team = new Team();
+            team.setName("teamA");
+            team.getMembers().add(member);
 
-            em.flush();
-            em.clear();
+            em.persist(team);
 
             tx.commit();
         } catch (Exception e){
